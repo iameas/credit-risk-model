@@ -2,12 +2,15 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
 import pandas as pd
+import shap
+import numpy as np
 
 app = FastAPI()
 
 package = joblib.load("models/model_package.pkl")
 model = package["model"]
 feature_names = package["features"]
+explainer = shap.Explainer(model["model"])
 
 class LoanInput(BaseModel):
     RevolvingUtilizationOfUnsecuredLines: float
@@ -44,4 +47,25 @@ def predict(data: LoanInput):
     return {
         "default_probability": float(prob),
         "risk_level": risk
+    }
+
+@app.post("/explain")
+def explain(data: LoanInput):
+
+    df = pd.DataFrame([data.dict()])
+    df = df.reindex(columns=feature_names, fill_value=0)
+
+    shap_values = explainer(df)
+
+    explanation = {
+        feature: float(value)
+        for feature, value in zip(feature_names, shap_values.values[0])
+    }
+
+    sorted_explanation = dict(
+        sorted(explanation.items(), key=lambda x: abs(x[1]), reverse=True)
+    )
+
+    return {
+        "explanation": sorted_explanation
     }
