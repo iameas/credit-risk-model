@@ -130,7 +130,7 @@ if st.button("Predict Risk"):
 
             explanation = explain_response.json()["explanation"]
 
-            st.subheader("🧠 Top Risk Drivers")
+            st.subheader("Top Risk Drivers")
 
             df_exp = pd.DataFrame(
                 list(explanation.items())[:7],
