@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 st.markdown(
-    "<h1 style='text-align:center;'>🏦 Credit Risk AI System</h1>",
+    "<h1 style='text-align:center;'>Credit Risk AI System</h1>",
     unsafe_allow_html=True
 )
 
@@ -68,7 +68,7 @@ with col2:
 # -----------------------------
 # PREDICT BUTTON
 # -----------------------------
-if st.button("🔍 Predict Risk"):
+if st.button("Predict Risk"):
 
     payload = {
         "RevolvingUtilizationOfUnsecuredLines": RevolvingUtilizationOfUnsecuredLines,
