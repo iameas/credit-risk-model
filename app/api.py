@@ -1,39 +1,47 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 import joblib
-import numpy as np
+import pandas as pd
 
 app = FastAPI()
 
-model = joblib.load("models/xgb_credit_model.pkl")
-scaler = joblib.load("models/scaler.pkl")
+package = joblib.load("models/model_package.pkl")
+model = package["model"]
+feature_names = package["features"]
 
+class LoanInput(BaseModel):
+    RevolvingUtilizationOfUnsecuredLines: float
+    age: int
+    NumberOfTime30_59DaysPastDueNotWorse: int
+    NumberOfTime60_89DaysPastDueNotWorse: int
+    NumberOfTimes90DaysLate: int
+    DebtRatio: float
+    MonthlyIncome: float
+    NumberOfOpenCreditLinesAndLoans: int
+    NumberRealEstateLoansOrLines: int
+    NumberOfDependents: int
 
 @app.get("/")
 def home():
-    return {"message": "Credit Risk Model"}
-
+    return {"status": "Credit Risk Predictor API (Running)"}
 
 @app.post("/predict")
-def predict(data: dict):
-    try:
-    
-        features = np.array(list(data.values())).reshape(1, -1)
+def predict(data: LoanInput):
 
-        features_scaled = scaler.transform(features)
+    df = pd.DataFrame([data.dict()])
 
-        prob = model.predict_proba(features_scaled)[0][1]
+    df = df.reindex(columns=feature_names, fill_value=0)
 
-        if prob < 0.3:
-            risk = "Low Risk"
-        elif prob < 0.7:
-            risk = "Medium Risk"
-        else:
-            risk = "High Risk"
+    prob = model.predict_proba(df)[0][1]
 
-        return {
-            "default_probability": float(prob),
-            "risk_level": risk
-        }
+    if prob < 0.3:
+        risk = "Low Risk"
+    elif prob < 0.7:
+        risk = "Medium Risk"
+    else:
+        risk = "High Risk"
 
-    except Exception as e:
-        return {"error": str(e)}
+    return {
+        "default_probability": float(prob),
+        "risk_level": risk
+    }
