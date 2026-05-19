@@ -70,3 +70,117 @@ This project solves that by building a system that is:
 ---
 
 # System Architecture
+User Input (Streamlit UI)
+↓
+FastAPI Backend (/predict, /explain)
+↓
+ML Pipeline (XGBoost Model)
+↓
+Prediction + SHAP Explanation
+↓
+Response to UI
+↓
+Visualization (Gauge + Feature Importance)
+
+
+---
+
+# Dataset Information
+
+The dataset contains credit behavior features such as:
+
+- Revolving utilization of unsecured lines
+- Age of borrower
+- Debt ratio
+- Monthly income
+- Number of open credit lines
+- Past due history (30–59, 60–89, 90+ days)
+
+Target variable:
+```
+SeriousDlqin2yrs (0 = No default, 1 = Default)
+```
+
+---
+
+# Machine Learning Pipeline
+
+### Steps:
+
+1. Data Cleaning
+   - Missing value handling
+   - Column normalization
+
+2. Feature Processing
+   - StandardScaler applied
+
+3. Model Training
+   - XGBoost Classifier
+   - Class imbalance handled via `scale_pos_weight`
+
+4. Model Packaging
+   - Entire pipeline saved using `joblib`
+
+---
+
+# Model Explainability (SHAP)
+
+SHAP (SHapley Additive Explanations) is used to interpret model decisions.
+
+It answers:
+
+> Why was this loan approved or rejected?
+
+It shows feature contributions such as:
+- Debt ratio impact
+- Late payment history
+- Income effect
+- Credit utilization impact
+
+This ensures transparency and trust in predictions.
+
+---
+
+# Tech Stack
+
+- Python
+- Pandas
+- Scikit-learn
+- XGBoost
+- FastAPI
+- Streamlit
+- SHAP
+- Plotly
+- Joblib
+
+---
+
+# Project Structure
+
+```
+
+credit-risk-model/
+│
+├── data/
+│   └── cs-training.csv
+│
+├── models/
+│   └── model_package.pkl
+│
+├── src/
+│   └── train.py
+│
+├── app/
+│   ├── api.py
+│   └── streamlit\_app.py
+│
+├── requirements.txt
+└── README.md
+
+---
+
+# Installation Guide
+```
+git clone <repo-url>
+cd credit-risk-model
+```
