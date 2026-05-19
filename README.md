@@ -5,7 +5,7 @@ from raw data → model training → API deployment → interactive user interfa
 
 ---
 
-# Table of Contents
+## Table of Contents
 
 - [Project Overview](#project-overview)
 - [Problem Statement](#problem-statement)
@@ -29,7 +29,7 @@ from raw data → model training → API deployment → interactive user interfa
 
 ---
 
-# Project Overview
+## Project Overview
 
 This system predicts whether a loan applicant is likely to default based on historical financial behavior and credit data.
 
@@ -44,7 +44,7 @@ The goal is not just prediction, but **decision transparency**.
 
 ---
 
-# Problem Statement
+## Problem Statement
 
 Financial institutions need to evaluate loan applicants quickly and accurately.
 
@@ -60,7 +60,7 @@ This project solves that by building a system that is:
 
 ---
 
-# Objectives
+## Objectives
 
 - Predict loan default probability
 - Classify applicants into risk categories
@@ -69,7 +69,7 @@ This project solves that by building a system that is:
 
 ---
 
-# System Architecture
+## System Architecture
 User Input (Streamlit UI)
 ↓
 FastAPI Backend (/predict, /explain)
@@ -85,7 +85,7 @@ Visualization (Gauge + Feature Importance)
 
 ---
 
-# Dataset Information
+## Dataset Information
 
 The dataset contains credit behavior features such as:
 
@@ -103,7 +103,7 @@ SeriousDlqin2yrs (0 = No default, 1 = Default)
 
 ---
 
-# Machine Learning Pipeline
+## Machine Learning Pipeline
 
 ### Steps:
 
@@ -123,7 +123,7 @@ SeriousDlqin2yrs (0 = No default, 1 = Default)
 
 ---
 
-# Model Explainability (SHAP)
+## Model Explainability (SHAP)
 
 SHAP (SHapley Additive Explanations) is used to interpret model decisions.
 
@@ -141,7 +141,7 @@ This ensures transparency and trust in predictions.
 
 ---
 
-# Tech Stack
+## Tech Stack
 
 - Python
 - Pandas
@@ -155,32 +155,57 @@ This ensures transparency and trust in predictions.
 
 ---
 
-# Project Structure
+## Installation Guide
+``
+git clone https://github.com/iameas/credit-risk-model.git
+``
+``
+cd credit-risk-model
+``
 
-```
+--- 
 
-credit-risk-model/
-│
-├── data/
-│   └── cs-training.csv
-│
-├── models/
-│   └── model_package.pkl
-│
-├── src/
-│   └── train.py
-│
-├── app/
-│   ├── api.py
-│   └── streamlit\_app.py
-│
-├── requirements.txt
-└── README.md
+## Create virtual environment
+``python -m venv venv``
+``venv\Scripts\activate``
 
 ---
 
-# Installation Guide
+## Install Dependencies
+``pip install -r requirements.txt``
+
+---
+
+## How to Run the Project
+
+### Step 1 — Train Model
+``python src/train.py``
+
+### Step 2 — Start API
+``uvicorn app.api:app --reload``
+
+### Step 3 — Start Streamlit UI
+``streamlit run app/streamlit_app.py``
+
+UI runs at:
+``http://localhost:8501``
+
+## API Documentation
+### Predict Endpoint: POST *``/predict``*
+
+inputs:
+
 ```
-git clone <repo-url>
-cd credit-risk-model
+{
+  "RevolvingUtilizationOfUnsecuredLines": 0.5,
+  "age": 35,
+  "NumberOfTime30_59DaysPastDueNotWorse": 1,
+  "NumberOfTime60_89DaysPastDueNotWorse": 0,
+  "NumberOfTimes90DaysLate": 0,
+  "DebtRatio": 0.3,
+  "MonthlyIncome": 5000,
+  "NumberOfOpenCreditLinesAndLoans": 5,
+  "NumberRealEstateLoansOrLines": 1,
+  "NumberOfDependents": 2
+}
 ```
