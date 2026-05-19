@@ -1,8 +1,6 @@
 # Credit Risk Prediction System (End-to-End Machine Learning Project)
 
-An end-to-end, production-style machine learning system that predicts loan default risk and explains decisions using interpretable AI (SHAP).
-
-This project simulates a real-world credit scoring pipeline used in fintech and banking systems:
+An end-to-end, production-style machine learning system that predicts loan default risk and explains decisions using interpretable AI (SHAP). This project simulates a real-world credit scoring pipeline used in fintech and banking systems:
 from raw data → model training → API deployment → interactive user interface → explainable AI layer.
 
 ---
