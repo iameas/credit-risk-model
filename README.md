@@ -273,4 +273,4 @@ The UI includes:
 Built as a full-stack machine learning engineering project focused on production deployment patterns and explainable AI.
 
 ## If You Like This Project
-*feel free to star the repository or connect with me on LinkedIn.*
+*Feel free to star the repository or connect with me on LinkedIn.*
