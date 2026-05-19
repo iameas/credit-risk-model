@@ -156,18 +156,17 @@ This ensures transparency and trust in predictions.
 ---
 
 ## Installation Guide
-``
+```
 git clone https://github.com/iameas/credit-risk-model.git
-``
-``
 cd credit-risk-model
-``
+```
 
 --- 
 
 ## Create virtual environment
-``python -m venv venv``
-``venv\Scripts\activate``
+```python -m venv venv
+venv\Scripts\activate
+```
 
 ---
 
@@ -209,3 +208,69 @@ inputs:
   "NumberOfDependents": 2
 }
 ```
+
+Output:
+
+```
+{
+  "default_probability": 0.42,
+  "risk_level": "Medium Risk"
+}
+``` 
+
+### Explain Endpoint: POST *``/explain``*
+
+Output:
+
+```
+{
+  "DebtRatio": 0.32,
+  "NumberOfTimes90DaysLate": 0.28,
+  "MonthlyIncome": -0.18
+}
+```
+
+## Frontend (Streamlit UI)
+
+The UI includes:
+- Input form for applicant data
+- Risk prediction button
+- Gauge chart visualization
+- SHAP explanation bar chart
+- Risk classification badges
+  
+## Key Features
+- End-to-end ML pipeline
+- Real-time prediction API
+- Explainable AI system
+- Interactive dashboard
+- Production-style architecture
+- Clean feature engineering pipeline
+
+## Challenges Faced
+- Feature mismatch between training and API
+- Column naming inconsistencies (hyphen vs underscore)
+- API validation errors (422 responses)
+- Model input-output alignment issues
+- Debugging multi-layer system (UI → API → model)
+
+## Lessons Learned
+- ML is easy — system integration is hard
+- Consistency in features is critical
+- APIs must strictly enforce schema validation
+- Explainability increases trust in models
+- End-to-end systems matter more than model accuracy alone
+
+## Future Improvements
+- Docker containerization
+- Cloud deployment (AWS / Render)
+- Database logging of predictions
+- Authentication system
+- Model monitoring dashboard
+- Batch prediction API
+
+## Author
+Built as a full-stack machine learning engineering project focused on production deployment patterns and explainable AI.
+
+## If You Like This Project
+*feel free to star the repository or connect with me on LinkedIn.*
